@@ -29,6 +29,20 @@
 
 **Video Tutorial:**
 - [SQL Complete Course - YouTube](https://youtu.be/yE6tIle64tU?si=ZGGa5cc3FbUW1MyB)
+
+## Mathematics
+
+**Linear Algebra**
+- [Linear Algebra Course - YouTube](https://youtu.be/QCPJ0VdpM00?si=4xoc6laDG1uX3Wgz)
+
+**Topics:**
+
+1. Scalars, Vectors, Matrices, and Tensors: Understanding how these structures store data.
+2. Matrix Operations: Addition, subtraction, and (especially) matrix multiplication. This is the core operation in neural networks.
+3. Dot Product: How inputs are combined and "weighed" in a model.
+4. Transpose and Inverse: Used for manipulating data and solving linear equations.
+5. Eigenvectors & Eigenvalues: Crucial for dimensionality reduction techniques like Principal Component Analysis (PCA).
+6. Vector Spaces and Norms: Used to measure the "distance" or "error" between a model's prediction and the actual value.
 ---
 
 **More to Come 🚀**
