@@ -25,6 +25,10 @@
 **Resources:**
 - [Pandas Books & Materials](https://drive.google.com/file/d/1IPyfFzO_IeVBF6fQPvcoZINqkDaoBWFB/view?usp=sharing)
 
+## SQL
+
+**Video Tutorial:**
+- [SQL Complete Course - YouTube](https://youtu.be/yE6tIle64tU?si=ZGGa5cc3FbUW1MyB)
 ---
 
 **More to Come 🚀**
