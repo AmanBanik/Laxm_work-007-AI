@@ -80,7 +80,7 @@ This is what makes the project stand out. After we have a working agent, we tack
 **The Problem:** Demos don't count. Does it actually work with real banks and data?
 
 **What we'll build:**
-- Bank API integrations (Plaid, Yodlee)
+- Bank API integrations
 - Receipt scanning via OCR
 - Email parsing for statements
 - Multiple currency support
