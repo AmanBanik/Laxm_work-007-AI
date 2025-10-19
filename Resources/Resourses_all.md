@@ -41,6 +41,10 @@
 **Resources:**
 - [CUDA-Py](/Resources/back/cuda_python_handbook.md)
 
+## Algorithms
+
+**Resources:**
+-[Grokking_Algorithms](/Resources/back/Grokking_Algorithms.pdf)
 ## Mathematics
 
 **Linear Algebra**
@@ -54,6 +58,13 @@
 4. Transpose and Inverse: Used for manipulating data and solving linear equations.
 5. Eigenvectors & Eigenvalues: Crucial for dimensionality reduction techniques like Principal Component Analysis (PCA).
 6. Vector Spaces and Norms: Used to measure the "distance" or "error" between a model's prediction and the actual value.
+
+**Calculus(Multivariate)**
+- [Calculus handbook](/Resources/back/calculus_ml_handbook.md)
+
+**Probability**
+- [Probability handbook](/Resources/back/probability_ml_handbook.md)
+
 ---
 
 **More to Come 🚀**
