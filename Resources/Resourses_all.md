@@ -45,6 +45,12 @@
 
 **Resources:**
 -[Grokking_Algorithms](/Resources/back/Grokking_Algorithms.pdf)
+
+## LLM Course
+
+**LLM course by- Maxime Labonne**
+- [Git repo](https://github.com/mlabonne/llm-course.git)
+
 ## Mathematics
 
 **Linear Algebra**
