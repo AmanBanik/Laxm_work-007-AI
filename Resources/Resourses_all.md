@@ -23,12 +23,23 @@
 - [Pandas Complete Course - YouTube](https://youtu.be/VXtjG_GzO7Q?si=zoGxCwykR7DONPfv)
 
 **Resources:**
-- [Pandas Books & Materials](https://drive.google.com/file/d/1IPyfFzO_IeVBF6fQPvcoZINqkDaoBWFB/view?usp=sharing)
+1. [Pandas 1](https://drive.google.com/file/d/1IPyfFzO_IeVBF6fQPvcoZINqkDaoBWFB/view?usp=sharing)
+2. [Pandas 2](https://drive.google.com/file/d/1xs8h6nHHLYh_gujwKJYXgAXC2TM44mTE/view?usp=drive_link)
+
+## Data Import/Export
+
+**Resources:**
+- [Data I/E](https://drive.google.com/file/d/1gqyz6tzd-u9F4nhWsNZF3aVI4TON8EnV/view?usp=drive_link)
 
 ## SQL
 
 **Video Tutorial:**
 - [SQL Complete Course - YouTube](https://youtu.be/yE6tIle64tU?si=ZGGa5cc3FbUW1MyB)
+
+## GPU programmig 
+
+**Resources:**
+- [CUDA-Py](/Resources/back/cuda_python_handbook.md)
 
 ## Mathematics
 
