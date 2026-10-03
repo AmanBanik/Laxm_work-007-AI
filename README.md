@@ -1,553 +1,1415 @@
-# 🤖 Autonomous Financial AI Agent
-### *Building from Scratch, Then Making It Trustworthy*
+# LAXM
+## Local-First, Verifiable Financial AI
+
+> **A personal financial intelligence system where AI can reason over sensitive financial state without becoming the authority over that state.**
 
 ---
 
-## What Is This?
+## The project, rethought
 
-An autonomous financial AI agent built **completely from scratch** - not fine-tuning existing models, but implementing every component ourselves to truly understand how it works. 
+This repository began as an early exploration of an autonomous financial AI.
 
-**But here's the key:** Most projects stop at "it works in demos." We're going further.
+The original plan combined:
 
-After building the AI, we'll solve the real problems that prevent financial AI from being trustworthy and deployable in the real world.
+- financial data ingestion
+- machine learning
+- reinforcement learning
+- fuzzy logic
+- voice interaction
+- document processing
+- privacy
+- security
+- banking integrations
+- NPU / edge inference
 
----
+That version was useful as a learning roadmap, but it mixed too many independent problems together and treated every interesting AI technology as something that needed to be part of the final system.
 
-## 🎯 Two-Phase Approach
+**LAXM is the second iteration of that idea.**
 
-### **PHASE A: Build the AI Agent** 
-*Create a working autonomous financial agent from scratch*
+The new project is built around one systems thesis:
 
-**What we're building:**
-- 📊 Multi-format data ingestion (PDF, Excel, CSV → SQL)
-- 🧠 Machine Learning prediction models (expenses, income)
-- 🤖 Reinforcement Learning agent (learns optimal decisions)
-- 🎯 Fuzzy Logic (handles uncertainty)
-- 🎤 Voice interface (natural conversation)
-- 📈 Savings recommendations and financial insights
-- 📉 Pattern detection and analytics
+> **Financial truth should live in a deterministic, verifiable data layer. AI should sit around that layer as a reasoning, retrieval, and interaction system with controlled capabilities.**
 
-**Goal:** Working AI agent that predicts, recommends, and interacts.
+This is deliberately not "another finance chatbot."
 
-**Timeline:** ~6-8 months
+LAXM is an exploration of a **privacy-first financial agent architecture** combining:
 
----
-
-### **PHASE B: Make It Actually Trustworthy**
-*Solve the problems that prevent financial AI from real-world deployment*
-
-This is what makes the project stand out. After we have a working agent, we tackle the hard problems:
-
-#### 🚨 **1. Hallucination Prevention**
-**The Problem:** AI confidently makes up wrong financial numbers. That's catastrophic.
-
-**What we'll build:**
-- Uncertainty quantification system
-- Confidence scores for every prediction
-- Fact verification against actual data
-- Explicit "I don't know" responses when uncertain
-- Explainable predictions (SHAP/LIME)
+- structured financial data
+- machine learning
+- deep learning
+- time-series forecasting
+- retrieval-augmented generation
+- MCP tools and resources
+- agent planning and verification
+- local / edge inference
+- CPU / GPU / NPU workload partitioning
 
 ---
 
-#### 🔐 **2. Security Architecture**
-**The Problem:** AI agents with unrestricted database access = disaster waiting to happen.
+# 1. Core Architecture
 
-**What we'll build:**
-- Permission-based access control
-- Agent actions require user confirmation
-- SQL injection prevention
-- Audit logging of every database interaction
-- Sandboxed execution environment
-- Encrypted storage
-
----
-
-#### 🛡️ **3. Privacy Preservation**
-**The Problem:** Financial data is ultra-sensitive. Cloud processing = privacy risk.
-
-**What we'll build:**
-- Local-first processing (no mandatory cloud)
-- End-to-end encryption
-- Differential privacy for training
-- User data ownership and deletion rights
-- Anonymization mechanisms
-- Open-source = auditable
-
----
-
-#### 💼 **4. Real-World Integration**
-**The Problem:** Demos don't count. Does it actually work with real banks and data?
-
-**What we'll build:**
-- Bank API integrations
-- Receipt scanning via OCR
-- Email parsing for statements
-- Multiple currency support
-- Standard export formats
-- Mobile-ready architecture
-
----
-
-#### 🚀 **5. Edge Optimization (V2.0)**
-**The Problem:** Future is edge computing and NPUs, not cloud GPUs.
-
-**What we'll build:**
-- Model quantization
-- NPU-optimized inference
-- Mobile/edge deployment
-- Lower power consumption
-- On-device real-time processing
-
----
-
-**Timeline:** ~4-6 months after Phase A
-
-**Why this matters:** This is what transforms a "cool project" into actual research and innovation. Phase A gets us a working system. Phase B makes it trustworthy, secure, and deployable.
-
----
-
-## 🛠️ Technical Architecture
-
-### Phase A Structure:
-```
-financial-ai-agent/
-├── core/                      # Main agent logic
-├── data_processing/           # File parsing, cleaning
-├── database/                  # SQL schema, operations
-├── ml_models/                 # Prediction models
-│   ├── predictors/           # Expense, income predictors
-│   └── recommenders/         # Savings, earning suggestions
-├── reinforcement_learning/    # RL agent, training
-├── fuzzy_logic/              # Uncertainty handling
-├── voice_interface/          # Speech input/output
-├── query_system/             # NLP, context understanding
-├── analytics/                # Reports, visualizations
-└── optimization/             # Performance, caching
+```text
+                              USER
+                                |
+                                v
+                       +----------------+
+                       | Agent / Planner|
+                       | LLM + Policy  |
+                       +-------+--------+
+                               |
+                        Structured Intent
+                               |
+                               v
+                     +--------------------+
+                     |  MCP / Tool Layer  |
+                     +----+-------+-------+
+                          |       |
+                +---------+       +----------+
+                v                            v
+        Financial Data Plane             RAG Layer
+                |                            |
+                v                            v
+        Analytics / Forecasting       Evidence + Provenance
+                |                            |
+                +-------------+--------------+
+                              |
+                              v
+                      Verification Layer
+                              |
+                              v
+                       Grounded Response
+                              |
+                 +------------+------------+
+                 |                         |
+            Local / Edge              Optional Cloud
+             Inference                  Escalation
 ```
 
-### Phase B Additions:
-```
-financial-ai-agent/
-├── [Everything from Phase A]
-│
-├── hallucination_prevention/  🆕 Phase B
-│   ├── uncertainty_quantification.py
-│   ├── confidence_scoring.py
-│   ├── fact_verification.py
-│   └── explainability.py
-│
-├── security/                  🆕 Phase B
-│   ├── authentication.py
-│   ├── authorization.py
-│   ├── audit_logger.py
-│   ├── sql_sanitizer.py
-│   └── sandbox.py
-│
-├── privacy/                   🆕 Phase B
-│   ├── differential_privacy.py
-│   ├── local_processing.py
-│   ├── encryption.py
-│   └── anonymization.py
-│
-├── integration/               🆕 Phase B
-│   ├── bank_apis/
-│   ├── ocr_engine.py
-│   ├── email_parser.py
-│   └── export_formats.py
-│
-└── npu_optimization/          🆕 Phase B (V2.0)
-    ├── model_quantization.py
-    ├── npu_inference.py
-    └── edge_deployment.py
-```
+## Central design rule
 
----
+> **AI reasons. Software verifies.**
 
-## 📈 Detailed Roadmap
+The model is allowed to interpret intent, plan a task, retrieve information, and explain results.
 
-### **PHASE A: Build the Core Agent** (~6-8 months)
+It is not allowed to become the unquestioned source of financial truth.
 
-#### **Part 1: Foundation** (~2 months)
-- Project structure setup
-- Database architecture
-- Data ingestion pipeline (PDF, Excel, CSV)
-- Basic data cleaning and validation
-- Simple analytics and reports
+For example, if the user asks:
 
-#### **Part 2: Intelligence** (~2-3 months)
-- Scikit-learn prediction models
-- Expense forecasting
-- Income trend analysis
-- Savings recommendations
-- Pattern recognition
-- Anomaly detection basics
+> "Can I afford to spend another ₹8,000 this month?"
 
-#### **Part 3: Autonomy** (~2-3 months)
-- RL environment design
-- RL agent implementation (DQN/PPO)
-- Fuzzy logic integration
-- Decision-making system
-- Context-aware recommendations
+the system should not have the LLM estimate the answer from conversational context.
 
-#### **Part 4: Interaction** (~1-2 months)
-- Voice interface (speech-to-text, text-to-speech)
-- Natural language understanding
-- Query handling system
-- Conversational capabilities
+Instead:
 
-**Milestone: Working autonomous AI agent that you can talk to and get financial advice from.**
-
----
-
-### **PHASE B: Make It Trustworthy** (~4-6 months)
-
-#### **Part 1: Hallucination Prevention** (~1-2 months)
-- Implement uncertainty quantification
-- Add confidence scoring to all predictions
-- Build fact verification system
-- Integrate explainability (SHAP/LIME)
-- Test and validate accuracy improvements
-
-#### **Part 2: Security Hardening** (~1-2 months)
-- Design authentication/authorization system
-- Implement database access controls
-- Add SQL injection prevention
-- Build comprehensive audit logging
-- Create sandboxed execution environment
-- Security testing and penetration testing
-
-#### **Part 3: Privacy Layer** (~1-2 months)
-- Implement end-to-end encryption
-- Add differential privacy to training
-- Build anonymization mechanisms
-- Ensure local-first processing
-- GDPR compliance verification
-- Privacy testing
-
-#### **Part 4: Real-World Integration** (~1-2 months)
-- Bank API integrations
-- OCR for receipt scanning
-- Email parsing for statements
-- Export functionality
-- User testing with real data
-- Bug fixes and refinements
-
-#### **Part 5: Edge Optimization (V2.0)** (~2-3 months)
-- Model quantization research
-- NPU inference implementation
-- Performance benchmarking
-- Mobile deployment
-- Edge testing
-
-**Milestone: Production-ready, trustworthy financial AI that solves real problems.**
-
----
-
-## 🎯 Why This Two-Phase Approach?
-
-### Makes Learning Manageable:
-```
-Phase A: Learn ML, RL, system design
-        ↓
-    Working system
-        ↓
-Phase B: Learn security, privacy, deployment
-        ↓
-    Real innovation
+```text
+User question
+      |
+      v
+Agent interprets intent
+      |
+      v
+get_cashflow_state()
+      |
+      v
+Deterministic financial engine
+      |
+      +--> current balance
+      +--> expected income
+      +--> recurring obligations
+      +--> forecast interval
+      +--> savings target
+      |
+      v
+Verified structured result
+      |
+      v
+LLM explains the result
 ```
 
-### Allows Pivoting:
-- After Phase A, we have something usable
-- Can adjust Phase B based on what we learned
-- Can prioritize which Phase B components matter most
-
-### Portfolio Value:
-- **After Phase A:** "I built an AI agent" (good)
-- **After Phase B:** "I solved trust and security problems in financial AI" (exceptional)
-
-### Research Potential:
-- Phase A is solid implementation work
-- Phase B is where novel research happens
-- Each Phase B component could be a paper
+The LLM is therefore **not the financial source of truth**.
 
 ---
 
-## 🎓 What You'll Learn
+# 2. What LAXM Is Actually Trying to Solve
 
-### Phase A (Core AI):
-```
-Technical:
-├── Machine Learning (scikit-learn)
-├── Reinforcement Learning (RL fundamentals)
-├── Fuzzy Logic Systems
-├── NLP and voice interfaces
-├── Database design
-└── System architecture
+## Financial Data Intelligence
 
-Skills:
-├── Reading ML papers
-├── Implementing algorithms
-├── Debugging complex systems
-├── Collaborative coding
-└── Technical documentation
-```
+Import, normalize, classify, query, and analyze personal financial data.
 
-### Phase B (Innovation):
-```
-Advanced Topics:
-├── Uncertainty quantification
-├── Explainable AI
-├── Security architecture
-├── Privacy-preserving ML
-├── API integrations
-├── Edge deployment
-└── Model optimization
+Examples:
 
-Real-World Skills:
-├── Thinking about deployment
-├── Security-first mindset
-├── Privacy considerations
-├── Performance optimization
-└── Research methodology
-```
+- transaction categorization
+- merchant normalization
+- recurring-payment detection
+- spending analysis
+- anomaly detection
+- budget utilization
+- cash-flow analysis
+- net-worth calculations
 
 ---
 
-## 👥 Looking For Collaborators
+## Time-Series Intelligence
 
-### For Phase A:
-**🔵 Core Development**
-- ML model building (scikit-learn)
-- RL agent implementation
-- Database architecture
-- Voice interface
+Learn temporal patterns in income and expenses.
 
-**🟢 Features**
-- Data processing pipeline
-- NLP and context understanding
-- Fuzzy logic rules
-- Analytics and visualization
+Examples:
 
-**🔴 Support**
-- Testing and debugging
-- Documentation
-- Data cleaning scripts
-- Sample data generation
-
-### For Phase B (Can Join Later):
-**🟡 Security Focus**
-- Authentication systems
-- Encryption implementation
-- Security testing
-- Audit logging
-
-**🟠 Privacy Focus**
-- Privacy-preserving ML
-- Anonymization
-- Compliance research
-
-**🟣 Integration Focus**
-- Bank API connections
-- OCR implementation
-- Email parsing
-- Export formats
-
-**Everyone starts in Phase A. Phase B roles open up later based on interest.**
+- expense forecasting
+- income forecasting
+- recurring cash-flow modeling
+- seasonality
+- trend detection
+- forecast intervals
+- future budget pressure
 
 ---
 
-## 💡 What You Get
+## Retrieval-Augmented Generation
 
-### After Phase A:
-- Solid ML/RL project for portfolio
-- Working AI system you built
-- Deep understanding of AI agents
-- Collaborative development experience
+Use RAG for information that is not naturally represented as structured financial state.
 
-### After Phase B:
-- Novel research contributions
-- Solutions to real unsolved problems
-- Potential publications
-- Enterprise-grade skills
-- Something actually deployable
-- Possible startup foundation
+Examples:
 
----
+- bank statements
+- uploaded financial documents
+- tax/reference material
+- financial-product documentation
+- user-defined financial policies
+- supporting evidence for generated answers
 
-## 🖥️ Requirements
-
-### Hardware:
-- Any modern laptop/ desktop for most work
-- 16GB RAM minimum, having more ~ comfortable
-- No GPU required (we'll handle heavy training separately on NVDIA® GeForce RTX platforms)
-
-### Skills:
-- **Minimum:** Python basics, willingness to learn
-- **Helpful:** Pandas, NumPy, SQL, DBMS, UI/UX
-- **Not required:** ML/RL experience (we're learning together)
-
-### Time:
-- **Good weeks:** 5-10 hours
-- **Normal weeks:** 2-3 hours
-- **Exam weeks:** 0 hours is fine
+RAG exists to provide **evidence**, not to replace the transaction database.
 
 ---
 
-## 📚 Tech Stack
+## MCP-Native Agent Interaction
 
-### Phase A:
-```
-Core:
-├── Python 3.9+
-├── NumPy, Pandas
-├── MySQL/PostgreSQL/SQLite + SQLAlchemy
+Expose financial capabilities through structured MCP tools and resources.
 
-ML/AI:
-├── Scikit-learn (ML)
-├── Stable-Baselines3 (RL)
-├── Scikit-fuzzy (fuzzy logic)
-├── XGBoost (boosting)
-
-Voice & NLP:
-├── pyttsx3 (text-to-speech)
-├── SpeechRecognition
-└── spaCy (NLP)
-
-Visualization:
-├── Matplotlib, Seaborn
-└── Plotly
-```
-
-### Phase B Additions:
-```
-Security & Privacy:
-├── cryptography
-├── python-jose (JWT)
-└── Custom implementations
-
-Integration:
-├── Plaid SDK (banking)
-├── Tesseract (OCR)
-├── Email parsing libraries
-
-Explainability:
-├── SHAP
-└── LIME
-
-Optimization:
-├── Numba
-├── ONNX (model conversion)
-└── TensorFlow Lite / PyTorch Mobile
-```
+The agent interacts with the financial system through controlled interfaces rather than unrestricted database access.
 
 ---
 
-## 🤝 How We'll Work
+## Local-First Intelligence
 
-**Philosophy:**
-- Phase A: Focus on getting it working
-- Phase B: Focus on making it right
-- Learn together, help each other
-- No stupid questions
-- Document everything
+Sensitive financial state should remain local whenever practical.
 
-**Workflow:**
-- GitHub for code (branches, PRs)
-- WhatsApp/Discord for communication
-- Weekly optional syncs
-- Jupyter notebooks for experiments
-
-**Flexibility:**
-- Contribute when you can
-- Take breaks during exams
-- Help where you're interested
-- Learn what you want to learn
+Cloud models become an optional escalation path rather than the architectural default.
 
 ---
 
-## 📞 Interested?
+## Edge / NPU Research
 
-**Project Lead:** Aman Banik
+Investigate how much of the agent can execute efficiently on:
 
-**To join, tell me:**
-1. **Your background** - What you know (Python? ML? Security?)
-2. **What interests you** - Which phase or component excites you?
-3. **Time commitment** - Realistic hours per week?
-4. **What you want to learn** - What skills do you want to gain?
+- CPU
+- GPU
+- NPU
+- hybrid local/cloud architectures
 
-We'll set up a group and start with Phase A!
+The objective is not "put AI on an NPU because NPUs are cool."
 
----
-
-## FAQs
-
-**Q: Do I need to commit to both phases?**  
-A: Nope! Join for Phase A, see if you want to continue to Phase B.
-
-**Q: Can I join during Phase B?**  
-A: Yes! Especially if you're interested in security/privacy/integration.
-
-**Q: Isn't Phase B too ambitious?**  
-A: Maybe! But that's where the real innovation is. We'll figure it out.
-
-**Q: Do I need ML/RL knowledge?**  
-A: Not for starting! We're learning together in Phase A.
-
-**Q: What if I only want to do Phase B stuff?**  
-A: Cool! You'll need to understand the Phase A architecture, but you can focus on B components.
-
-**Q: Will this take over my life?**  
-A: Nope. It's a long project, but low weekly hours. Marathon, not sprint.
-
-**Q: Can we publish this?**  
-A: Potentially! Phase B work especially has publication potential.
-
-**Q: What if Phase A takes longer?**  
-A: That's fine. No hard deadlines. Better to do it right than rush.
+The objective is to measure the trade-offs.
 
 ---
 
-## 🎯 Current Status
+# 3. Financial Data Plane
 
-**Phase A:**
-- [x] Core concept defined
-- [ ] Architecture designed
-- [ ] Team recruitment (looking for 3-5 people)
-- [ ] GitHub repo setup
-- [ ] Start development
+The data plane owns the canonical financial state.
 
-**Phase B:**
-- [ ] Detailed planning after Phase A progress
-- [ ] Research on each component
-- [ ] Open for contributors later
+Responsibilities:
+
+- CSV / Excel / statement ingestion
+- transaction normalization
+- merchant normalization
+- category labels
+- duplicate detection
+- recurring-transaction detection
+- account and transaction IDs
+- deterministic financial calculations
+- provenance
+- schema validation
+
+Candidate technologies:
+
+- Python
+- Pandas / Polars
+- SQLite
+- DuckDB
+- PostgreSQL for optional server deployments
+- SQLAlchemy
+- Pydantic
+
+The database is **state**, not an LLM memory dump.
 
 ---
 
-## 🌟 Bottom Line
+# 4. Machine Learning
 
-**Phase A:** Build a working financial AI agent from scratch (learn ML/RL hands-on)
+ML is used where patterns actually need to be learned.
 
-**Phase B:** Solve the trust, security, and deployment problems that prevent financial AI from real-world use (actual innovation)
+Initial targets:
 
-Most student projects stop at Phase A. We're going to Phase B, where the interesting problems are.
+- transaction categorization
+- merchant classification
+- anomaly detection
+- recurring-payment detection
+- user-specific spending patterns
 
-**Let's build something that actually matters.** 🚀
+Possible models:
+
+- Logistic Regression
+- Random Forest
+- XGBoost
+- LightGBM
+- calibrated classifiers
+- clustering for exploration
+
+A complex model must earn its place against a simpler baseline.
+
+The project will not use deep learning simply because deep learning is available.
 
 ---
 
-### Quick Stats
-```
-👥 Team Size: 5-7 people (Phase A), more can join for Phase B
-🎓 Level: College students learning together
-💻 Language: Python 95%, SQL 3%, Other 2%
-⏱️ Phase A: ~6-8 months
-⏱️ Phase B: ~4-6 months  
-📊 Total: ~10-14 months for complete system
-🎯 Difficulty: Challenging but achievable
-💡 Innovation: Solving actual unsolved problems
+# 5. Deep Learning
+
+Deep learning becomes relevant where it provides measurable value.
+
+Potential applications:
+
+- learned transaction embeddings
+- sequence representation
+- document understanding
+- semantic retrieval
+- compact language models
+- multimodal receipt / document processing
+
+Candidate stack:
+
+- PyTorch
+- Transformers
+- Sentence Transformers
+- ONNX
+- ExecuTorch
+
+A classical or simpler baseline should exist before a more complex neural architecture is accepted.
+
+---
+
+# 6. Time-Series Forecasting
+
+Financial behavior is temporal, so forecasting is a first-class subsystem.
+
+The project will compare models rather than assuming one architecture is universally superior.
+
+## Baselines
+
+- Naive
+- Seasonal Naive
+- Moving Average
+- Exponential Smoothing
+
+## Statistical Models
+
+- ARIMA
+- SARIMA
+- ETS
+
+## Machine Learning
+
+- lag features
+- rolling statistics
+- calendar features
+- event features
+- XGBoost
+- LightGBM
+
+## Deep Learning
+
+- LSTM
+- GRU
+- Temporal CNN
+- Transformer-based forecasting
+
+Deep models remain experimental until they outperform simpler models under proper temporal validation.
+
+## Evaluation
+
+Forecasting experiments should use:
+
+- walk-forward validation
+- MAE
+- RMSE
+- sMAPE / MAPE where appropriate
+- prediction interval coverage
+- error by forecast horizon
+
+Random train/test splits are not valid for time-series experiments.
+
+---
+
+# 7. RAG and Provenance
+
+RAG is for knowledge that does not belong in the transaction ledger.
+
+The intended pipeline:
+
+```text
+Document
+   |
+Parsing
+   |
+Chunking + Metadata
+   |
+Embedding
+   |
+Vector / Hybrid Index
+   |
+Retriever
+   |
+Reranker
+   |
+Evidence Set
+   |
+LLM
+   |
+Grounded Answer + Provenance
 ```
 
+Every evidence item should retain metadata such as:
+
+- document ID
+- source
+- page / section
+- chunk ID
+- timestamp
+- retrieval metadata
+
+The system should be able to answer:
+
+> "Where did that claim come from?"
+
+without fabricating the source.
+
+RAG should therefore be evaluated not just by whether an answer sounds good, but by whether the answer is supported by the retrieved evidence.
+
 ---
 
-*Way more interesting than typical college projects, right?*
+# 8. MCP as the Capability Boundary
+
+MCP is not a decorative integration.
+
+It is part of the system boundary between the probabilistic model and the sensitive financial system.
+
+The MCP server may expose:
+
+- tools
+- resources
+- prompts
+
+## Example read-oriented tools
+
+```text
+get_accounts()
+get_transactions()
+search_transactions()
+summarize_spending()
+get_budget_state()
+forecast_cashflow()
+detect_anomalies()
+search_financial_documents()
+explain_transaction()
+generate_financial_report()
+```
+
+## Example resources
+
+```text
+financial://accounts
+financial://transactions/{account_id}
+financial://budgets/current
+financial://forecasts/cashflow
+financial://documents/{document_id}
+financial://audit/{event_id}
+```
+
+## Future mutating capabilities
+
+```text
+create_budget_draft()
+create_category_rule()
+archive_transaction()
+export_report()
+```
+
+Mutating operations should pass through authorization and, where appropriate, explicit user confirmation.
+
+The model gets **capabilities**, not unrestricted authority.
+
+---
+
+# 9. Agent Control Plane
+
+The agent should not simply be allowed to call arbitrary functions.
+
+A control plane sits between the model and the real system.
+
+```text
+LLM
+ |
+ v
+Intent
+ |
+ v
+Tool selection
+ |
+ v
+Schema validation
+ |
+ v
+Authorization / Policy
+ |
+ +---- DENY -------> stop
+ |
+ +---- CONFIRM ----> user approval
+ |
+ +---- ALLOW ------> tool execution
+ |
+ v
+Tool result
+ |
+ v
+Verification
+ |
+ v
+Response
+```
+
+Controls include:
+
+- typed inputs
+- typed outputs
+- least privilege
+- read-only vs mutating capabilities
+- confirmation policies
+- rate limits
+- audit events
+- provenance
+- failure handling
+- prompt-injection boundaries
+
+Arbitrary model-generated SQL execution is intentionally excluded from the design.
+
+---
+
+# 10. Trust and Verification
+
+LAXM treats trust as a systems problem.
+
+## Financial correctness
+
+Numbers should originate from:
+
+- database state
+- deterministic calculations
+- validated model outputs
+- explicit tool results
+
+## Retrieval correctness
+
+Evidence should retain provenance.
+
+## Prediction uncertainty
+
+Forecasts should be treated as estimates with measurable error and, where possible, uncertainty intervals.
+
+## Abstention
+
+When evidence is insufficient:
+
+```text
+Not enough evidence
+        |
+        v
+Do not fabricate
+        |
+        v
+Return uncertainty
+or request more evidence
+```
+
+The system should prefer an explicit unknown over an invented answer.
+
+SHAP/LIME can help explain some models, but explainability is not itself a general hallucination-prevention mechanism.
+
+---
+
+# 11. Security Model
+
+The financial database is treated as a sensitive system boundary.
+
+Planned controls:
+
+- authentication
+- authorization
+- least-privilege tools
+- parameterized SQL
+- input validation
+- secret isolation
+- audit logging
+- PII-aware logging
+- secure configuration
+- prompt-injection defenses
+- document trust boundaries
+- network egress controls
+- separation of read and write capabilities
+
+The governing principle is:
+
+> **The model receives controlled capabilities, not raw authority.**
+
+---
+
+# 12. Privacy Model
+
+The default architecture is local-first.
+
+```text
+Sensitive financial data
+        |
+        v
+     Local device
+        |
+   +----+-----+
+   |          |
+Database    Local RAG
+   |          |
+   +----+-----+
+        |
+   Local models
+```
+
+Possible deployment modes:
+
+### Local
+
+Sensitive state and supported inference remain on-device.
+
+### Hybrid
+
+Structured financial state remains local while selected workloads are sent to a cloud model.
+
+### Research / Cloud
+
+Used for experimentation and controlled benchmarking.
+
+Every deployment should document:
+
+- what data stays local
+- what data leaves the device
+- why it leaves
+- which model receives it
+- whether the transfer is optional
+
+---
+
+# 13. Edge / NPU Research
+
+The original NPU idea remains, but the research question is now much more precise:
+
+> **Which parts of a personal financial agent should run on CPU, GPU, NPU, or cloud, and what measurable trade-off does each partition create?**
+
+A possible split:
+
+```text
+CPU
+ |
+ |-- database
+ |-- business logic
+ |-- cryptography
+ |-- orchestration
+ +-- policy engine
+
+NPU
+ |
+ |-- embeddings
+ |-- classification
+ |-- compact transformer inference
+ +-- always-available local AI tasks
+
+GPU
+ |
+ |-- training
+ |-- heavier local experimentation
+ +-- evaluation
+
+Cloud
+ |
+ |-- optional large-model reasoning
+ +-- expensive or non-local workloads
+```
+
+Candidate deployment technologies:
+
+- ONNX Runtime
+- ONNX Runtime QNN
+- ExecuTorch
+- Android on-device AI runtimes
+- vendor-specific runtimes where necessary
+
+The project will not claim accelerator execution unless hardware execution is actually verified.
+
+---
+
+# 14. Hardware-Aware Model Routing
+
+Long-term, LAXM can use capability-aware routing.
+
+```text
+                 +----------------+
+                 |  Agent Task    |
+                 +-------+--------+
+                         |
+                         v
+                 +----------------+
+                 | Capability     |
+                 | / Cost Router  |
+                 +-------+--------+
+                         |
+          +--------------+--------------+
+          |              |              |
+          v              v              v
+        CPU/NPU          GPU          Cloud
+       cheap/local    heavier local  optional
+          |              |              |
+          +--------------+--------------+
+                         |
+                         v
+                   Unified Result
+```
+
+Routing decisions may consider:
+
+- model availability
+- latency
+- privacy level
+- model size
+- device temperature
+- power budget
+- task complexity
+- network availability
+- accuracy requirements
+
+This can eventually become one of the project's most interesting systems components.
+
+---
+
+# 15. India-Focused Direction
+
+A future deployment target is India's financial ecosystem, including appropriate Account Aggregator-based data access where supported.
+
+The architecture should remain:
+
+- consent-driven
+- purpose-limited
+- auditable
+- privacy-aware
+
+Until real integrations are available, the project will use:
+
+- synthetic data
+- user-provided test data
+- mock provider APIs
+
+No bank credentials belong inside the agent.
+
+---
+
+# 16. What Is Deliberately NOT in the Core
+
+Several technologies from the original project are intentionally removed from the foundation.
+
+## No LLM from scratch
+
+The interesting problem is the architecture around the model.
+
+## No RL by default
+
+Budgeting and financial planning are not automatically reinforcement-learning problems.
+
+RL can return later if a clearly defined sequential decision problem justifies it.
+
+## No fuzzy logic as a generic uncertainty layer
+
+Uncertainty should be classified according to its actual source:
+
+- data uncertainty
+- model uncertainty
+- forecast uncertainty
+- retrieval uncertainty
+- policy uncertainty
+
+## No differential privacy just for decoration
+
+Differential privacy is relevant when the system actually performs the type of shared-data learning or statistical release that calls for it.
+
+## No unrestricted text-to-SQL
+
+The agent interacts with typed financial capabilities rather than arbitrary SQL execution.
+
+## No voice-first development
+
+Voice is an interface layer.
+
+It is not the foundation of the system.
+
+## No bank-credential scraping
+
+External data access must use supported and consent-based mechanisms.
+
+---
+
+# 17. Proposed Repository Structure
+
+```text
+Laxm_work-007-AI/
+|
++-- apps/
+|   +-- api/
+|   +-- cli/
+|   +-- android/
+|
++-- core/
+|   +-- domain/
+|   +-- schemas/
+|   +-- policies/
+|   +-- config/
+|
++-- data/
+|   +-- ingestion/
+|   +-- normalization/
+|   +-- classification/
+|   +-- storage/
+|   +-- synthetic/
+|
++-- analytics/
+|   +-- spending/
+|   +-- budgeting/
+|   +-- anomalies/
+|   +-- net_worth/
+|
++-- forecasting/
+|   +-- baselines/
+|   +-- statistical/
+|   +-- ml/
+|   +-- deep/
+|   +-- evaluation/
+|
++-- rag/
+|   +-- ingestion/
+|   +-- chunking/
+|   +-- embeddings/
+|   +-- retrieval/
+|   +-- reranking/
+|   +-- provenance/
+|
++-- agent/
+|   +-- planner/
+|   +-- state/
+|   +-- memory/
+|   +-- routing/
+|   +-- verifier/
+|
++-- mcp/
+|   +-- server/
+|   +-- tools/
+|   +-- resources/
+|   +-- prompts/
+|   +-- policies/
+|
++-- edge/
+|   +-- export/
+|   +-- quantization/
+|   +-- onnx/
+|   +-- executorch/
+|   +-- benchmarks/
+|
++-- security/
+|   +-- auth/
+|   +-- authorization/
+|   +-- audit/
+|   +-- threat_models/
+|
++-- evals/
+|   +-- financial/
+|   +-- rag/
+|   +-- agent/
+|   +-- safety/
+|   +-- edge/
+|
++-- notebooks/
+|   +-- ml/
+|   +-- dl/
+|   +-- time_series/
+|   +-- rag/
+|   +-- edge/
+|
++-- docs/
+|   +-- architecture/
+|   +-- experiments/
+|   +-- decisions/
+|
++-- tests/
+|
++-- Resources/
+|
++-- pyproject.toml
++-- README.md
+```
+
+This is a **target architecture**, not a claim that all of these directories need to exist immediately.
+
+---
+
+# 18. Development Roadmap
+
+## Phase 0 - Architecture
+
+- define the financial domain model
+- define schemas
+- define trust boundaries
+- write the threat model
+- create synthetic financial data
+- establish evaluation protocols
+- define API and MCP contracts
+
+**Exit condition:** the major contracts are stable enough to implement against.
+
+---
+
+## Phase 1 - Financial Data Plane
+
+- statement ingestion
+- transaction normalization
+- local database
+- deterministic calculations
+- transaction categorization baseline
+- anomaly detection baseline
+- reproducible reports
+
+**Exit condition:** useful financial questions can be answered without an LLM.
+
+---
+
+## Phase 2 - Forecasting
+
+- naive baselines
+- statistical forecasting
+- feature-based ML forecasting
+- walk-forward validation
+- deep-model experiments
+- uncertainty intervals
+
+**Exit condition:** forecasting models are quantitatively comparable.
+
+---
+
+## Phase 3 - RAG
+
+- document ingestion
+- metadata
+- embeddings
+- vector / hybrid search
+- reranking
+- evidence packaging
+- provenance
+
+**Exit condition:** document questions are traceable to source evidence.
+
+---
+
+## Phase 4 - Agent + MCP
+
+- MCP server
+- read-only tools
+- resources
+- structured schemas
+- tool routing
+- authorization
+- verification
+- audit logging
+- confirmation for state-changing actions
+
+**Exit condition:** an agent can complete useful financial tasks through controlled capabilities.
+
+---
+
+## Phase 5 - Local Models
+
+- local embeddings
+- local classifiers
+- compact local LLM
+- model routing
+- quantization
+- offline operation
+
+**Exit condition:** a meaningful subset of the system works without cloud inference.
+
+---
+
+## Phase 6 - Edge / NPU
+
+- model export
+- CPU benchmark
+- GPU benchmark
+- NPU benchmark
+- quantization experiments
+- fallback measurement
+- Android / edge deployment
+- hardware-aware routing
+
+**Exit condition:** at least one real accelerator path is reproducibly benchmarked.
+
+---
+
+## Phase 7 - Integrated Financial Agent
+
+Target architecture:
+
+```text
+                 USER
+                   |
+                   v
+              Local Client
+                   |
+                   v
+             Agent / Planner
+                   |
+           +-------+-------+
+           |               |
+           v               v
+          RAG         MCP Server
+           |               |
+           |       +-------+-------+
+           |       |               |
+           |    Finance        Forecast
+           |     Tools           Tools
+           |       |               |
+           +-------+---------------+
+                   |
+                   v
+             Verification
+                   |
+                   v
+            Grounded Answer
+                   |
+             +-----+-----+
+             |           |
+           Local       Cloud
+           Model      Optional
+```
+
+---
+
+# 19. Research Questions
+
+The project is intentionally structured around questions that can be measured.
+
+### RQ1
+How much functionality can a personal financial agent execute locally without materially reducing usefulness?
+
+### RQ2
+Which workloads benefit most from NPU execution?
+
+### RQ3
+How much quality is lost through model quantization for:
+
+- classification
+- retrieval
+- compact local reasoning
+
+### RQ4
+Does deterministic financial computation reduce numerical hallucination compared with direct LLM reasoning?
+
+### RQ5
+Can MCP act as a practical capability boundary between an LLM and sensitive financial operations?
+
+### RQ6
+How much do provenance and verification reduce unsupported financial claims?
+
+### RQ7
+What is the privacy / latency / quality trade-off between:
+
+- local-only
+- hybrid
+- cloud-heavy
+
+architectures?
+
+### RQ8
+What is the best workload partition across CPU, GPU, NPU, and cloud for a personal financial agent?
+
+---
+
+# 20. Evaluation
+
+LAXM will not be evaluated purely through demos.
+
+## Financial correctness
+
+- arithmetic correctness
+- reproducibility
+- edge-case correctness
+- reconciliation accuracy
+
+## Transaction classification
+
+- precision
+- recall
+- F1
+- calibration
+
+## Forecasting
+
+- MAE
+- RMSE
+- sMAPE / MAPE where meaningful
+- interval coverage
+- performance by forecast horizon
+
+## Retrieval
+
+- Recall@k
+- MRR
+- nDCG
+- citation correctness
+- provenance completeness
+
+## Agent
+
+- tool-selection accuracy
+- argument validity
+- unnecessary tool calls
+- invalid tool calls
+- unsafe tool calls
+- abstention behavior
+- policy violations
+
+## Edge inference
+
+- latency
+- throughput
+- memory
+- model size
+- accelerator utilization
+- CPU fallback frequency
+- energy / power where measurable
+- accuracy before and after quantization
+
+> **The goal is benchmarks, not vibes.**
+
+---
+
+# 21. Experimental Methodology
+
+Each major subsystem should follow the same loop:
+
+```text
+Problem
+   |
+   v
+Simple baseline
+   |
+   v
+Experiment
+   |
+   v
+Measure
+   |
+   v
+Compare
+   |
+   +---- Worse / unnecessary ---> remove
+   |
+   +---- Better                ---> keep
+                              |
+                              v
+                         Document result
+```
+
+Every major architectural addition should answer:
+
+1. What problem does it solve?
+2. Why is a simpler method insufficient?
+3. How will improvement be measured?
+4. What are the failure modes?
+5. What crosses the trust boundary?
+6. Can the result be reproduced?
+
+---
+
+# 22. Success Criteria
+
+LAXM is successful when it can demonstrate:
+
+1. Realistic financial data can be imported into a local system.
+2. Financial calculations remain deterministic and reproducible.
+3. Forecasting is compared against proper temporal baselines.
+4. RAG responses preserve source provenance.
+5. An agent can use financial capabilities through MCP.
+6. Unsafe or ambiguous operations are blocked or require confirmation.
+7. The agent can abstain rather than fabricate evidence.
+8. A useful subset of the workload runs locally.
+9. At least one hardware-accelerated inference path is benchmarked.
+10. Major claims about the system are backed by experiments.
+
+---
+
+# 23. Current Status
+
+This repository is an **architecture reset of an old project idea**.
+
+## Concept retained
+
+- privacy-first financial AI
+- trustworthy financial computation
+- personal context
+- local / edge inference
+- NPU exploration
+
+## Architectural reset
+
+- [x] deterministic financial layer is the source of truth
+- [x] forecasting is separated from LLM reasoning
+- [x] RAG is a distinct evidence layer
+- [x] MCP is a capability boundary
+- [x] policy and verification are first-class components
+- [x] edge inference is a measurable research track
+- [x] evaluation is part of the system
+- [x] RL is no longer mandatory
+- [x] fuzzy logic is no longer a generic uncertainty layer
+- [x] unrestricted text-to-SQL is excluded
+
+## Implementation
+
+- [ ] financial data plane
+- [ ] analytics engine
+- [ ] forecasting engine
+- [ ] RAG pipeline
+- [ ] MCP server
+- [ ] agent planner
+- [ ] policy / verification layer
+- [ ] local inference runtime
+- [ ] edge benchmark suite
+- [ ] integrated client
+
+---
+
+# 24. Technology Direction
+
+The exact stack will be selected experimentally.
+
+| Layer | Direction |
+|---|---|
+| Data | Python, Pandas / Polars, SQLite / DuckDB, PostgreSQL |
+| ML | scikit-learn, XGBoost / LightGBM |
+| DL | PyTorch, Transformers |
+| Time Series | statsmodels + ML/DL experiments |
+| RAG | embeddings, hybrid retrieval, reranking, provenance |
+| Agent | structured outputs, tool calling, routing, verification |
+| MCP | tools, resources, prompts, controlled actions |
+| Edge | ONNX Runtime, QNN, ExecuTorch, Android AI runtimes |
+| Security | typed validation, authorization, secrets isolation, audit logging |
+
+The core architecture should remain independent of a single model provider.
+
+---
+
+# 25. Why MCP Matters Here
+
+The interesting question is not:
+
+> "Can I connect an LLM to an MCP server?"
+
+The interesting question is:
+
+> **Can MCP serve as a practical capability boundary between a probabilistic agent and sensitive financial operations?**
+
+Example:
+
+```text
+User:
+"Has my food spending become unusually high?"
+
+                |
+                v
+
+              LLM
+
+                |
+                v
+
+compare_spending_to_baseline(
+    category="food",
+    period="current_month"
+)
+
+                |
+                v
+
+             MCP
+
+                |
+                v
+
+     Deterministic financial engine
+
+                |
+                v
+
+{
+    current: ...,
+    baseline: ...,
+    delta: ...,
+    interval: ...,
+    provenance: [...]
+}
+
+                |
+                v
+
+           Verification
+
+                |
+                v
+
+         LLM explains result
+```
+
+The model reasons over a structured result instead of inventing the result.
+
+That separation gives the project something concrete to measure.
+
+---
+
+# 26. Why the NPU Part Still Matters
+
+The NPU component remains because personal finance is a particularly sensitive domain for local inference.
+
+Potential benefits of local inference include:
+
+- reduced data exposure
+- offline operation
+- local latency
+- reduced cloud dependence
+- potentially lower inference cost
+- private personal AI
+
+The research challenge is to identify:
+
+> **the smallest useful local models and the right workload partition**
+
+rather than forcing a large model onto an accelerator simply because the hardware exists.
+
+---
+
+# 27. Long-Term Vision
+
+The long-term system can evolve toward:
+
+```text
+                       PERSONAL AI
+                            |
+             +--------------+--------------+
+             |              |              |
+          Finance         Docs          Personal
+           State          / RAG           Context
+             |              |              |
+             +--------------+--------------+
+                            |
+                            v
+                      Agent Runtime
+                            |
+               +------------+------------+
+               |            |            |
+              CPU          NPU          GPU
+               |            |            |
+               +------------+------------+
+                            |
+                     Optional Cloud
+                            |
+                            v
+                     Verified Output
+```
+
+The objective is not maximum autonomy.
+
+The objective is **useful autonomy with explicit control boundaries**.
+
+---
+
+# 28. Project Philosophy
+
+LAXM follows one rule:
+
+> **Complexity must earn its place.**
+
+A transformer, RAG pipeline, MCP server, agent loop, RL algorithm, NPU backend, or security mechanism is not a feature merely because it exists.
+
+It belongs only when:
+
+- it solves a real problem
+- a simpler method is insufficient
+- the improvement can be measured
+- its failure modes are understood
+- the security implications are understood
+- the result can be reproduced
+
+---
+
+# 29. References
+
+## Model Context Protocol
+
+- MCP Architecture: https://modelcontextprotocol.io/docs/learn/architecture
+- MCP Specification: https://modelcontextprotocol.io/specification
+- MCP Tools: https://modelcontextprotocol.io/specification/2025-06-18/server/tools
+
+## Edge Inference
+
+- PyTorch ExecuTorch: https://pytorch.org/executorch/
+- ExecuTorch Backends: https://docs.pytorch.org/executorch/stable/backends-section.html
+- Qualcomm Backend: https://docs.pytorch.org/executorch/stable/backends-qualcomm.html
+- ONNX Runtime Execution Providers: https://onnxruntime.ai/docs/execution-providers/
+- ONNX Runtime QNN: https://onnxruntime.ai/docs/execution-providers/QNN-ExecutionProvider.html
+
+## Android / On-Device AI
+
+- Android AI: https://developer.android.com/ai
+- Google AI Edge: https://ai.google.dev/edge
+- ExecuTorch Android: https://docs.pytorch.org/executorch/stable/large-models.html
+
+## Financial Data
+
+- Reserve Bank of India: https://www.rbi.org.in/
+- Account Aggregator ecosystem information: https://www.rbi.org.in/
+
+---
+
+# 30. Final Principle
+
+The old project asked:
+
+> **"Can we build an autonomous financial AI?"**
+
+The new project asks:
+
+> **"Can we build a financial system in which AI can reason over sensitive personal state while computation, evidence, permissions, and hardware boundaries remain under explicit system control?"**
+
+That is the problem LAXM is now built to investigate.
+
+---
+
+**Project:** LAXM  
+**Repository:** https://github.com/AmanBanik/Laxm_work-007-AI  
+**Status:** Architecture reset / implementation not started
